@@ -1,0 +1,51 @@
+ *Task 2: Stock Trading Platform*
+
+
+java
+import java.util.HashMap;
+import java.util.Map;
+
+class Stock {
+    String name;
+    double price;
+    int quantity;
+
+    Stock(String name, double price) {
+        this.name = name;
+        this.price = price;
+        this.quantity = 0;
+    }
+
+    void buy(int quantity) {
+        this.quantity += quantity;
+        System.out.println("Bought " + quantity + " shares of " + name + " at $" + price + " each.");
+    }
+
+    @Override
+    public String toString() {
+        return "Stock: " + name + ", Quantity: " + quantity + ", Price: $" + price;
+    }
+}
+
+public class StockTradingPlatform {
+    public static void main(String[] args) {
+        Map<String, Stock> portfolio = new HashMap<>();
+
+        addStock(portfolio, "AAPL", 150.0, 10);
+        addStock(portfolio, "GOOG", 2800.0, 5);
+        showPortfolio(portfolio);
+    }
+
+    public static void addStock(Map<String, Stock> portfolio, String name, double price, int quantity) {
+        Stock stock = portfolio.getOrDefault(name, new Stock(name, price));
+        stock.buy(quantity);
+        portfolio.put(name, stock);
+    }
+
+    public static void showPortfolio(Map<String, Stock> portfolio) {
+        System.out.println("\n--- Portfolio ---");
+        for (Stock stock : portfolio.values()) {
+            System.out.println(stock);
+        }
+    }
+}
